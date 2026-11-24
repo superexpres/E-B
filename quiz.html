@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <meta name="description" content="浦安市民向けと、浦安市を詳しく知りたい方向けのクイズ各10問です。">
+  <title>浦安クイズ | 浦安のまち案内</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #173a43;
+      --muted: #5e7779;
+      --green: #1d7775;
+      --green-dark: #12565d;
+      --white: #fffdf7;
+      --line: #d9e1d9;
+      --coral: #bd5b3e;
+      --serif: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+      --sans: "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: linear-gradient(180deg, #f4f1e8 0, #fffdf7 38%, #f1f5f0 100%); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+    .topbar { display: flex; min-height: 82px; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--green-dark); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-decoration: none; white-space: nowrap; }
+    .brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50% 50% 50% 8px; background: var(--green-dark); color: white; font-family: var(--serif); font-size: 16px; letter-spacing: 0; }
+    .nav { display: flex; flex-wrap: wrap; gap: 19px; }
+    .nav a { color: var(--muted); font-size: 11px; text-decoration: none; }
+    .nav a:hover { color: var(--coral); }
+    .section { padding-top: 68px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+    .section-head > div { position: relative; padding-left: 15px; }
+    .section-head > div::before { position: absolute; top: 2px; bottom: 3px; left: 0; width: 3px; background: var(--coral); content: ""; }
+    .section-kicker { margin: 0 0 7px; color: var(--coral); font-size: 10px; font-weight: 800; letter-spacing: .2em; }
+    h2 { margin: 0; font-family: var(--serif); font-size: clamp(25px, 3vw, 33px); font-weight: 500; letter-spacing: .04em; }
+    .section-intro { max-width: 430px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+    .quiz-groups { display: grid; grid-template-columns: repeat(2, 1fr); align-items: start; gap: 16px; }
+    .quiz-group { padding: 22px; background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--green); }
+    .quiz-group h3 { margin: 0 0 5px; font-family: var(--serif); font-size: 19px; font-weight: 500; }
+    .quiz-group > p { margin: 0 0 17px; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .quiz-question { min-width: 0; margin: 0 0 12px; padding: 12px; border: 1px solid var(--line); }
+    .quiz-question:last-child { margin-bottom: 0; }
+    .quiz-question legend { max-width: 100%; padding: 0 5px; font-size: 11px; font-weight: 700; line-height: 1.7; }
+    .quiz-options { display: grid; gap: 5px; margin-top: 5px; }
+    .quiz-option { display: flex; align-items: flex-start; gap: 7px; padding: 7px 8px; background: #f3f6f1; font-size: 10px; line-height: 1.6; cursor: pointer; }
+    .quiz-option input { flex: 0 0 auto; margin: 2px 0 0; accent-color: var(--green-dark); }
+    .quiz-feedback { margin: 9px 0 0; color: var(--green-dark); font-size: 10px; line-height: 1.8; }
+    .quiz-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
+    .quiz-submit { padding: 12px 19px; border: 0; color: #fffdf7; background: var(--green-dark); font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .quiz-submit:hover { background: var(--green); }
+    .quiz-result { margin: 0; color: var(--green-dark); font-size: 12px; font-weight: 700; }
+    footer { margin-top: 68px; padding: 20px 0 28px; color: #d4e5e1; background: var(--ink); font-size: 10px; }
+    footer a { color: #f0ce84; }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 34px, 560px); }
+      .topbar { min-height: 68px; }
+      .nav { gap: 11px; }
+      .nav a { font-size: 9px; }
+      .section-head { align-items: flex-start; flex-direction: column; }
+      .quiz-groups { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .wrap { width: calc(100% - 28px); }
+      .brand { gap: 7px; font-size: 10px; }
+      .brand-mark { width: 29px; height: 29px; font-size: 14px; }
+      .nav { gap: 8px; }
+      .nav a { font-size: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar wrap">
+    <a class="brand" href="index.html" aria-label="浦安のまち案内 トップへ戻る">
+      <span class="brand-mark" aria-hidden="true">浦</span>
+      <span>URAYASU / CITY GUIDE</span>
+    </a>
+    <nav class="nav" aria-label="ページナビゲーション">
+      <a href="index.html">トップページへ戻る</a>
+    </nav>
+  </header>
+  <main class="wrap">
+    <section class="section" id="quiz" aria-labelledby="quiz-title">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">07 · URAYASU QUIZ</p>
+          <h2 id="quiz-title">浦安クイズに挑戦</h2>
+        </div>
+        <p class="section-intro">身近なまちのことから、統計や計画の細かな数字まで。選択肢を選んで答え合わせをしてみましょう。</p>
+      </div>
+      <form id="quiz-form">
+        <div class="quiz-groups">
+          <section class="quiz-group" aria-labelledby="quiz-resident-title">
+            <h3 id="quiz-resident-title">浦安市民ならわかる？</h3>
+            <p>交通や公共施設など、毎日の暮らしに身近な10問です。</p>
+            <fieldset class="quiz-question" data-level="resident" data-answer="1" data-correct-text="東京メトロ東西線" data-explanation="浦安駅は東京メトロ東西線の駅です。">
+              <legend>1. 浦安駅を通る鉄道路線はどれ？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-1" value="0">JR京葉線</label>
+                <label class="quiz-option"><input type="radio" name="resident-1" value="1">東京メトロ東西線</label>
+                <label class="quiz-option"><input type="radio" name="resident-1" value="2">JR総武線</label>
+                <label class="quiz-option"><input type="radio" name="resident-1" value="3">都営浅草線</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="2" data-correct-text="新浦安駅と舞浜駅" data-explanation="市内のJR京葉線の駅は新浦安駅と舞浜駅です。">
+              <legend>2. 市内にあるJR京葉線の駅の組み合わせは？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-2" value="0">浦安駅と新浦安駅</label>
+                <label class="quiz-option"><input type="radio" name="resident-2" value="1">舞浜駅と浦安駅</label>
+                <label class="quiz-option"><input type="radio" name="resident-2" value="2">新浦安駅と舞浜駅</label>
+                <label class="quiz-option"><input type="radio" name="resident-2" value="3">新浦安駅と市川塩浜駅</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="0" data-correct-text="おさんぽバス" data-explanation="浦安市が運行するコミュニティバスの愛称です。">
+              <legend>3. 浦安市のコミュニティバスの名前は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-3" value="0">おさんぽバス</label>
+                <label class="quiz-option"><input type="radio" name="resident-3" value="1">うらやすライナー</label>
+                <label class="quiz-option"><input type="radio" name="resident-3" value="2">ベイサイド号</label>
+                <label class="quiz-option"><input type="radio" name="resident-3" value="3">境川バス</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="3" data-correct-text="3路線" data-explanation="医療センター線・舞浜線・じゅんかい線の3路線です。">
+              <legend>4. おさんぽバスは何路線ある？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-4" value="0">1路線</label>
+                <label class="quiz-option"><input type="radio" name="resident-4" value="1">2路線</label>
+                <label class="quiz-option"><input type="radio" name="resident-4" value="2">4路線</label>
+                <label class="quiz-option"><input type="radio" name="resident-4" value="3">3路線</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="1" data-correct-text="1回100円" data-explanation="市の案内では、おさんぽバスの運賃は1回100円です。">
+              <legend>5. おさんぽバスの運賃（1回）は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-5" value="0">無料</label>
+                <label class="quiz-option"><input type="radio" name="resident-5" value="1">100円</label>
+                <label class="quiz-option"><input type="radio" name="resident-5" value="2">200円</label>
+                <label class="quiz-option"><input type="radio" name="resident-5" value="3">距離によって異なる</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="2" data-correct-text="京成バス千葉ウエスト" data-explanation="市内の路線バスの運行事業者の一つとして紹介しています。">
+              <legend>6. 市内の路線バスを運行する事業者として掲載されているのは？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-6" value="0">東急バス</label>
+                <label class="quiz-option"><input type="radio" name="resident-6" value="1">小田急バス</label>
+                <label class="quiz-option"><input type="radio" name="resident-6" value="2">京成バス千葉ウエスト</label>
+                <label class="quiz-option"><input type="radio" name="resident-6" value="3">西武バス</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="0" data-correct-text="8拠点" data-explanation="中央図書館と7つの分館、合わせて8拠点です。">
+              <legend>7. 市の案内で紹介している図書館は何拠点？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-7" value="0">8拠点</label>
+                <label class="quiz-option"><input type="radio" name="resident-7" value="1">5拠点</label>
+                <label class="quiz-option"><input type="radio" name="resident-7" value="2">10拠点</label>
+                <label class="quiz-option"><input type="radio" name="resident-7" value="3">12拠点</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="3" data-correct-text="7館" data-explanation="市内には7つの公民館があります。">
+              <legend>8. 浦安市内の公民館は何館？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-8" value="0">4館</label>
+                <label class="quiz-option"><input type="radio" name="resident-8" value="1">5館</label>
+                <label class="quiz-option"><input type="radio" name="resident-8" value="2">9館</label>
+                <label class="quiz-option"><input type="radio" name="resident-8" value="3">7館</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="1" data-correct-text="放課後うらっこクラブ" data-explanation="保護者が昼間家庭にいない小学生の放課後などの生活を支援する事業です。">
+              <legend>9. 放課後の小学生の居場所・生活を支援する事業は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-9" value="0">うらやすキッズタイム</label>
+                <label class="quiz-option"><input type="radio" name="resident-9" value="1">放課後うらっこクラブ</label>
+                <label class="quiz-option"><input type="radio" name="resident-9" value="2">おさんぽクラブ</label>
+                <label class="quiz-option"><input type="radio" name="resident-9" value="3">浦安学びの広場</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="resident" data-answer="2" data-correct-text="境川" data-explanation="市役所前の親水テラス整備など、境川の水辺を活用する取り組みが進められています。">
+              <legend>10. 市役所前の親水テラス整備などが進む川は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="resident-10" value="0">江戸川</label>
+                <label class="quiz-option"><input type="radio" name="resident-10" value="1">旧江戸川</label>
+                <label class="quiz-option"><input type="radio" name="resident-10" value="2">境川</label>
+                <label class="quiz-option"><input type="radio" name="resident-10" value="3">荒川</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+          </section>
+          <section class="quiz-group" aria-labelledby="quiz-detail-title">
+            <h3 id="quiz-detail-title">浦安市をもっと詳しく</h3>
+            <p>学校や公園の統計、まちづくり計画など、少し詳しい10問です。</p>
+            <fieldset class="quiz-question" data-level="detail" data-answer="0" data-correct-text="17校" data-explanation="市立小学校は17校です。高校・私立校は含みません。">
+              <legend>1. 浦安市立の小学校は何校？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-1" value="0">17校</label>
+                <label class="quiz-option"><input type="radio" name="detail-1" value="1">15校</label>
+                <label class="quiz-option"><input type="radio" name="detail-1" value="2">19校</label>
+                <label class="quiz-option"><input type="radio" name="detail-1" value="3">21校</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="2" data-correct-text="9校" data-explanation="市立中学校は9校です。">
+              <legend>2. 浦安市立の中学校は何校？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-2" value="0">7校</label>
+                <label class="quiz-option"><input type="radio" name="detail-2" value="1">8校</label>
+                <label class="quiz-option"><input type="radio" name="detail-2" value="2">9校</label>
+                <label class="quiz-option"><input type="radio" name="detail-2" value="3">11校</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="1" data-correct-text="116か所" data-explanation="公園の種類別内訳では、街区公園が最も多く116か所です（2025年3月31日現在）。">
+              <legend>3. 2025年3月末現在、街区公園は何か所？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-3" value="0">106か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-3" value="1">116か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-3" value="2">126か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-3" value="3">133か所</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="3" data-correct-text="15か所" data-explanation="近隣公園・地区公園を合わせて15か所です（2025年3月31日現在）。">
+              <legend>4. 近隣公園・地区公園を合わせると何か所？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-4" value="0">10か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-4" value="1">12か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-4" value="2">14か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-4" value="3">15か所</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="0" data-correct-text="それぞれ1か所" data-explanation="運動公園と総合公園は、それぞれ1か所です（2025年3月31日現在）。">
+              <legend>5. 運動公園と総合公園は、それぞれ何か所？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-5" value="0">それぞれ1か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-5" value="1">運動公園が2か所、総合公園が1か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-5" value="2">運動公園が1か所、総合公園が2か所</label>
+                <label class="quiz-option"><input type="radio" name="detail-5" value="3">それぞれ2か所</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="2" data-correct-text="83.81ヘクタール" data-explanation="市内の公園の総面積は83.81haです（2025年3月31日現在）。">
+              <legend>6. 市内の公園の総面積は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-6" value="0">63.81ha</label>
+                <label class="quiz-option"><input type="radio" name="detail-6" value="1">73.81ha</label>
+                <label class="quiz-option"><input type="radio" name="detail-6" value="2">83.81ha</label>
+                <label class="quiz-option"><input type="radio" name="detail-6" value="3">93.81ha</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="1" data-correct-text="4.87平方メートル" data-explanation="1人当たりの公園面積は4.87㎡です（2025年3月31日現在）。">
+              <legend>7. 1人当たりの公園面積は約何平方メートル？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-7" value="0">2.87㎡</label>
+                <label class="quiz-option"><input type="radio" name="detail-7" value="1">4.87㎡</label>
+                <label class="quiz-option"><input type="radio" name="detail-7" value="2">6.87㎡</label>
+                <label class="quiz-option"><input type="radio" name="detail-7" value="3">8.87㎡</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="3" data-correct-text="普及率99.8％、水洗化率98.3％" data-explanation="いずれも2026年3月末現在の市の案内に掲載された値です。">
+              <legend>8. 2026年3月末現在の下水道普及率・水洗化率の組み合わせは？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-8" value="0">普及率98.3％、水洗化率99.8％</label>
+                <label class="quiz-option"><input type="radio" name="detail-8" value="1">普及率95.0％、水洗化率90.0％</label>
+                <label class="quiz-option"><input type="radio" name="detail-8" value="2">普及率100％、水洗化率99.8％</label>
+                <label class="quiz-option"><input type="radio" name="detail-8" value="3">普及率99.8％、水洗化率98.3％</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="0" data-correct-text="医療センター線・舞浜線・じゅんかい線" data-explanation="この3路線がおさんぽバスとして運行されています。">
+              <legend>9. おさんぽバスの3路線はどれ？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-9" value="0">医療センター線・舞浜線・じゅんかい線</label>
+                <label class="quiz-option"><input type="radio" name="detail-9" value="1">浦安駅線・新浦安線・舞浜線</label>
+                <label class="quiz-option"><input type="radio" name="detail-9" value="2">北部線・中央線・南部線</label>
+                <label class="quiz-option"><input type="radio" name="detail-9" value="3">市役所線・境川線・海岸線</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+            <fieldset class="quiz-question" data-level="detail" data-answer="2" data-correct-text="2025年4月開始の5カ年計画" data-explanation="境川かわまちづくり第1期は2025年4月に始まった5カ年計画です。">
+              <legend>10. 境川かわまちづくり（第1期）の計画は？</legend>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="detail-10" value="0">2024年4月開始の3カ年計画</label>
+                <label class="quiz-option"><input type="radio" name="detail-10" value="1">2026年4月開始の10カ年計画</label>
+                <label class="quiz-option"><input type="radio" name="detail-10" value="2">2025年4月開始の5カ年計画</label>
+                <label class="quiz-option"><input type="radio" name="detail-10" value="3">2025年10月開始の2カ年計画</label>
+              </div>
+              <p class="quiz-feedback" hidden></p>
+            </fieldset>
+          </section>
+        </div>
+        <div class="quiz-controls">
+          <button class="quiz-submit" type="submit">答え合わせをする</button>
+          <p class="quiz-result" id="quiz-result" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">浦安のまち案内 · 掲載情報は<a href="https://www.city.urayasu.lg.jp/" target="_blank" rel="noopener noreferrer">浦安市公式サイト</a>の資料をもとにしています。</div>
+  </footer>
+  <script>
+    const quizForm = document.querySelector("#quiz-form");
+    const quizResult = document.querySelector("#quiz-result");
+
+    quizForm.addEventListener("change", (event) => {
+      if (event.target.matches('input[type="radio"]')) {
+        event.target.closest(".quiz-question").querySelector(".quiz-feedback").hidden = true;
+        quizResult.textContent = "";
+      }
+    });
+
+    quizForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const scores = { resident: 0, detail: 0 };
+      let unanswered = 0;
+
+      quizForm.querySelectorAll(".quiz-question").forEach((question) => {
+        const selected = question.querySelector('input[type="radio"]:checked');
+        const isCorrect = selected?.value === question.dataset.answer;
+        const level = question.dataset.level;
+        const feedback = question.querySelector(".quiz-feedback");
+
+        if (isCorrect) scores[level] += 1;
+        if (!selected) unanswered += 1;
+
+        feedback.textContent = `正解：${question.dataset.correctText}。${question.dataset.explanation}`;
+        feedback.hidden = false;
+      });
+
+      quizResult.textContent = `市民編：${scores.resident} / 10問正解　詳しく知る編：${scores.detail} / 10問正解${unanswered ? `　未回答：${unanswered}問` : ""}`;
+    });
+  </script>
+</body>
+</html>
